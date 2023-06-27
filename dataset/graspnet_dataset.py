@@ -237,6 +237,7 @@ def load_grasp_labels(root):
 def minkowski_collate_fn(list_data):
     coordinates_batch, features_batch = ME.utils.sparse_collate([d["coors"] for d in list_data],
                                                                 [d["feats"] for d in list_data])
+    coordinates_batch = np.ascontiguousarray(coordinates_batch, dtype=np.int32)
     coordinates_batch, features_batch, _, quantize2original = ME.utils.sparse_quantize(
         coordinates_batch, features_batch, return_index=True, return_inverse=True)
     res = {
