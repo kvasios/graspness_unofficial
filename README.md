@@ -1,5 +1,5 @@
 # GraspNet graspness
-My implementation of paper "Graspness Discovery in Clutters for Fast and Accurate Grasp Detection" (ICCV 2021).
+Fork of implementation of paper "Graspness Discovery in Clutters for Fast and Accurate Grasp Detection" (ICCV 2021) by [Zibo Chen](https://github.com/rhett-chen).
 
 [[paper](https://openaccess.thecvf.com/content/ICCV2021/papers/Wang_Graspness_Discovery_in_Clutters_for_Fast_and_Accurate_Grasp_Detection_ICCV_2021_paper.pdf)]
 [[dataset](https://graspnet.net/)]
@@ -62,6 +62,9 @@ python simplify_dataset.py --dataset_root /data3/graspnet
 Training examples are shown in [command_train.sh](command_train.sh). `--dataset_root`, `--camera` and `--log_dir` should be specified according to your settings. You can use TensorBoard to visualize training process.
 
 Testing examples are shown in [command_test.sh](command_test.sh), which contains inference and result evaluation. `--dataset_root`, `--camera`, `--checkpoint_path` and `--dump_dir` should be specified according to your settings. Set `--collision_thresh` to -1 for fast inference.
+
+## Model Weights
+We provide trained model weights. The model trained with RealSense data is available at [Google drive](https://drive.google.com/file/d/1RfdpEM2y0x98rV28d7B2Dg8LLFKnBkfL/view?usp=sharing) (this model is recommended for real-world application). The model trained with Kinect data is available at [Google drive](https://drive.google.com/file/d/10o5fc8LQsbI8H0pIC2RTJMNapW9eczqF/view?usp=sharing).
 
 ## Results
 Results "In repo" report the model performance of my results without collision detection.
