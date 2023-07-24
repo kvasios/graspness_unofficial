@@ -116,6 +116,18 @@ def inference(data_input):
         grasp_preds = pred_decode(end_points)
 
     preds = grasp_preds[0].detach().cpu().numpy()
+
+    # Filtering grasp poses for real-world execution. 
+    # The first mask preserves the grasp poses that are within a 30-degree angle with the vertical pose and have a width of less than 9cm.
+    # mask = (preds[:,9] > 0.9) & (preds[:,1] < 0.09)
+    # The second mask preserves the grasp poses within the workspace of the robot.
+    # workspace_mask = (preds[:,12] > -0.20) & (preds[:,12] < 0.21) & (preds[:,13] > -0.06) & (preds[:,13] < 0.18) & (preds[:,14] > 0.63) 
+    # preds = preds[mask & workspace_mask]
+
+    # if len(preds) == 0:
+    #         print('No grasp detected after masking')
+    #         return
+
     gg = GraspGroup(preds)
     # collision detection
     if cfgs.collision_thresh > 0:
@@ -154,3 +166,31 @@ if __name__ == '__main__':
         cloud = o3d.geometry.PointCloud()
         cloud.points = o3d.utility.Vector3dVector(pc.astype(np.float32))
         o3d.visualization.draw_geometries([cloud, *grippers])
+
+        # # Example code for execution
+        # g = gg[0]
+        # translation = g.translation
+        # rotation = g.rotation_matrix
+
+        # pose = translation_rotation_2_matrix(translation,rotation) #transform into 4x4 matrix, should be easy
+        # # Transform the grasp pose from camera frame to robot coordinate, implement according to your robot configuration
+        # tcp_pose = Camera_To_Robot(pose)
+
+        
+        # tcp_ready_pose = copy.deepcopy(tcp_pose)
+        # tcp_ready_pose[:3, 3] = tcp_ready_pose[:3, 3] - 0.1 * tcp_ready_pose[:3, 2] # The ready pose is backward along the actual grasp pose by 10cm to avoid collision
+       
+        # tcp_away_pose = copy.deepcopy(tcp_pose)
+        
+        # # to avoid the gripper rotate around the z_{tcp} axis in the clock-wise direction.
+        # tcp_away_pose[3,:3] = np.array([0,0,-1], dtype=np.float64)
+        
+        # # to avoid the object collide with the scene.
+        # tcp_away_pose[2,3] += 0.1
+
+        # # We rely on python-urx to send the tcp pose the ur5 arm, the package is available at https://github.com/SintefManufacturing/python-urx
+        # urx.movels([tcp_ready_pose, tcp_pose], acc = acc, vel = vel, radius = 0.05)
+
+        # # CLOSE_GRIPPER(), implement according to your robot configuration
+        # urx.movels([tcp_away_pose, self.throw_pose()], acc = 1.2 * acc, vel = 1.2 * vel, radius = 0.05, wait=False)
+
