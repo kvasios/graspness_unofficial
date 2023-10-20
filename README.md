@@ -20,8 +20,8 @@ Fork of implementation of paper "Graspness Discovery in Clutters for Fast and Ac
 ## Installation
 Get the code.
 ```bash
-git clone https://github.com/rhett-chen/graspness_implementation.git
-cd graspnet-graspness
+git clone https://github.com/graspnet/graspness_unofficial.git
+cd graspness_unofficial
 ```
 Install packages via Pip.
 ```bash
