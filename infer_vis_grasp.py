@@ -119,9 +119,9 @@ def inference(data_input):
 
     # Filtering grasp poses for real-world execution. 
     # The first mask preserves the grasp poses that are within a 30-degree angle with the vertical pose and have a width of less than 9cm.
-    # mask = (preds[:,9] > 0.9) & (preds[:,1] < 0.09)
+    # mask = (preds[:,10] > 0.9) & (preds[:,1] < 0.09)
     # The second mask preserves the grasp poses within the workspace of the robot.
-    # workspace_mask = (preds[:,12] > -0.20) & (preds[:,12] < 0.21) & (preds[:,13] > -0.06) & (preds[:,13] < 0.18) & (preds[:,14] > 0.63) 
+    # workspace_mask = (preds[:,13] > -0.20) & (preds[:,13] < 0.21) & (preds[:,14] > -0.06) & (preds[:,14] < 0.18) & (preds[:,15] > 0.63) 
     # preds = preds[mask & workspace_mask]
 
     # if len(preds) == 0:
