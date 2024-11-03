@@ -15,7 +15,7 @@ sys.path.append(os.path.join(ROOT_DIR, 'dataset'))
 
 from models.graspnet import GraspNet, pred_decode
 from dataset.graspnet_dataset import GraspNetDataset, minkowski_collate_fn
-from utils.collision_detector import ModelFreeCollisionDetector
+from collision_detector import ModelFreeCollisionDetector
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset_root', default=None, required=True)

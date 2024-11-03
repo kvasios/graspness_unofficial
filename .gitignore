@@ -1,3 +1,6 @@
+dataset
+test_similar
+data
 **/__pycache__/**
 *.ipynb
 **/.ipynb_checkpoints/**

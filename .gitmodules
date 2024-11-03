@@ -1,0 +1,3 @@
+[submodule "graspnetAPI"]
+	path = graspnetAPI
+	url = https://github.com/graspnet/graspnetAPI.git
