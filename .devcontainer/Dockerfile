@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     libx11-6 \
     libopenblas-dev \
     libgl1-mesa-glx \
+    libglib2.0-0 \
  && rm -rf /var/lib/apt/lists/*
 
 # Create a working directory

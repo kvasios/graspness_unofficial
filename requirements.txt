@@ -1,5 +1,5 @@
 tensorboard==2.3
-numpy==1.20.3
+numpy==1.21.0
 scipy
 open3d>=0.8
 Pillow
