@@ -16,14 +16,13 @@ RUN apt-get update && apt-get install -y \
  && rm -rf /var/lib/apt/lists/*
 
 # Create a working directory
-RUN mkdir /workspace
-WORKDIR /workspace
+RUN mkdir /app
 
 # Create a non-root user and switch to it
 RUN adduser --disabled-password --gecos '' --shell /bin/bash user \
  && echo "user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-RUN chown -R user:user /workspace
+RUN chown -R user:user /app
 
 USER user
 
@@ -32,27 +31,27 @@ ENV HOME=/home/user
 RUN mkdir -p $HOME/.cache $HOME/.config \
  && chmod -R 777 $HOME
 
-# Copy the requirements.txt file into the image
-COPY requirements.txt /workspace/
+# Copy the requirements file and install Python packages
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Install Python packages
-RUN pip install --no-cache-dir -r /workspace/requirements.txt
+USER root
 
-# # Copy the pointnet2 and knn directories into the image
-COPY pointnet2 /workspace/pointnet2
-COPY knn /workspace/knn
+# Copy pointnet2 directory and install it
+COPY pointnet2 /app/pointnet2
+RUN cd /app/pointnet2 && python setup.py install
 
-# Install pointnet2
-RUN cd /workspace/pointnet2 && python setup.py install --user
-
-# Install knn
-RUN cd /workspace/knn && python setup.py install --user
-
-# Copy the graspnetAI directory into the image
-COPY graspnetAI /workspace/graspnetAI
+# Copy knn directory and install it
+COPY knn /app/knn
+RUN cd /app/knn && python setup.py install
 
 # Install graspnetAI
-RUN cd /workspace/graspnetAI && pip install .
+COPY graspnetAPI /app/graspnetAI
+RUN cd /app/graspnetAI && pip install .
+
+USER user
 
 # Set the default command to python3
 CMD ["python3"]
+
+WORKDIR /app
