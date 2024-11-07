@@ -1,6 +1,6 @@
 # Setting up dockerized environment
 
-## Host system configuration
+## Host System Configuration
 
 ### System Requirements
 
@@ -9,7 +9,7 @@
 - NVIDIA driver ([driver installation guide](https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/index.html))
 - CUDA version 11.1 or higher ([CUDA installation guide](https://docs.nvidia.com/cuda/cuda-installation-guide-linux)) ([More about CUDA](https://en.wikipedia.org/wiki/CUDA))
 
-### Install docker
+### Install Docker
 
 - Follow the guide [here](https://docs.docker.com/engine/install/ubuntu/)
 - Add user to docker group
@@ -18,7 +18,7 @@
 sudo usermod -aG docker $USER
 ```
 
-### Add NVIDIA container toolkit
+### Add NVIDIA Container Toolkit
 
 - Follow the guide [here](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker)
 
@@ -35,4 +35,9 @@ sudo systemctl restart docker
 sudo docker run --rm --runtime=nvidia --gpus all ubuntu nvidia-smi
 ```
 
+## Evaluate in Visual Studio
 
+Make sure that the dev container extension is installed
+
+- From the command window in visual studio choose dev containers: rebuild and open in container for first time. Just reopen in remote container every other time.
+- Run ./command_infer_vis_grasp.sh

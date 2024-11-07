@@ -1,8 +1,7 @@
-torch>=1.8
 tensorboard==2.3
-numpy
+numpy==1.20.3
 scipy
 open3d>=0.8
 Pillow
 tqdm
-MinkowskiEngine==0.5.4
+MinkowskiEngine
