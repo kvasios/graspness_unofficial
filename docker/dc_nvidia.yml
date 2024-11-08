@@ -1,0 +1,31 @@
+version: "2.3"
+services:
+
+  graspness:
+    image: graspness_unofficial
+    container_name: graspnessunofficial
+    runtime: nvidia
+    tty: true
+    ipc: host
+    network_mode: "host"
+    privileged: true
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native
+      - DISPLAY=$DISPLAY
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/app/.Xauthority
+      - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
+      - ${GRASPNESS_DIR}:/app
+    working_dir: /app
+    entrypoint:
+    - bash
+    - -ci 
+    - "cd /app && ./command_infer_vis_grasp.sh"
+
+

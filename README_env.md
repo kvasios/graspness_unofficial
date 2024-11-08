@@ -9,7 +9,7 @@
 - NVIDIA driver ([driver installation guide](https://docs.nvidia.com/datacenter/tesla/driver-installation-guide/index.html))
 - CUDA version 11.1 or higher ([CUDA installation guide](https://docs.nvidia.com/cuda/cuda-installation-guide-linux)) ([More about CUDA](https://en.wikipedia.org/wiki/CUDA))
 
-### Install Docker
+### Install Docker & Docker Compose
 
 - Follow the guide [here](https://docs.docker.com/engine/install/ubuntu/)
 - Add user to docker group
@@ -17,6 +17,12 @@
 ```bash
 sudo usermod -aG docker $USER
 ```
+
+- Install docker compose
+```bash
+sudo apt-get install docker-compose
+```
+For more information on docker composer 
 
 ### Add NVIDIA Container Toolkit
 

@@ -62,7 +62,7 @@ RUN mkdir -p $HOME/.cache $HOME/.config \
  && chmod -R 777 $HOME
 
 # Copy the requirements file and install Python packages
-COPY requirements.txt /app/
+COPY ../requirements.txt /app/
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 USER root
