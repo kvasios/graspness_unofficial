@@ -1,4 +1,16 @@
-FROM pytorch/pytorch:1.9.1-cuda11.1-cudnn8-devel
+ARG PYTORCH="1.9.1"
+ARG CUDA="11.1"
+ARG CUDNN="8"
+
+FROM pytorch/pytorch:${PYTORCH}-cuda${CUDA}-cudnn${CUDNN}-devel
+
+##############################################
+# You should modify this to match your GPU compute capability
+# ENV TORCH_CUDA_ARCH_LIST="6.0 6.1 7.0+PTX"
+ENV TORCH_CUDA_ARCH_LIST="8.6"
+##############################################
+
+ENV TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 
 # Remove any third-party apt sources to avoid issues with expiring keys.
 RUN rm -f /etc/apt/sources.list.d/*.list
@@ -14,7 +26,24 @@ RUN apt-get update && apt-get install -y \
     libopenblas-dev \
     libgl1-mesa-glx \
     libglib2.0-0 \
+    ninja-build \
+    cmake \
+    build-essential \
+    xterm \
+    xauth \
+    openssh-server \
+    tmux \
+    wget \
+    mate-desktop-environment-core \
  && rm -rf /var/lib/apt/lists/*
+
+ RUN apt-get clean
+ RUN rm -rf /var/lib/apt/lists/*
+
+# For faster build, use more jobs.
+ENV MAX_JOBS=4
+RUN git clone --recursive "https://github.com/NVIDIA/MinkowskiEngine"
+RUN cd MinkowskiEngine; python setup.py install --force_cuda --blas=openblas
 
 # Create a working directory
 RUN mkdir /app

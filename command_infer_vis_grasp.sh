@@ -7,5 +7,5 @@ CUDA_VISIBLE_DEVICES=0 python infer_vis_grasp.py \
     --infer \
     --vis \
     --collision_thresh -1 \
-    --scene 0100 \
+    --scene 0130 \
     --index 0000
